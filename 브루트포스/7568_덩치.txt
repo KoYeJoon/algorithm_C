@@ -1,0 +1,35 @@
+//
+//  main.c
+//  prepareTest
+//
+//  Created by Ye Joon Ko on 2020/03/10.
+//  Copyright © 2020 Ye Joon Ko. All rights reserved.
+//
+
+#include <stdio.h>
+
+int main() {
+    int num = 0;
+    int weightArr[50]={0,};
+    int heightArr[50] = {0,};
+    int peopleNum[50] = {0,};
+    
+    int rank[50]={0,};
+    
+    scanf("%d",&num);
+    for(int i=0;i<num;i++){
+        scanf("%d %d",&weightArr[i],&heightArr[i]);
+    }
+    
+    for(int i=0;i<num;i++){
+        int count = 0;
+        for(int j=0;j<num;j++){
+            if(weightArr[i]<weightArr[j] && heightArr[i]<heightArr[j]){
+                count++;
+            }
+        }
+        printf("%d ",count+1);
+        
+    }
+    return 0;
+}

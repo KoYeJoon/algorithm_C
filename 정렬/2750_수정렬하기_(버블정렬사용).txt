@@ -1,0 +1,37 @@
+//
+//  main.c
+//  prepareTest
+//
+//  Created by Ye Joon Ko on 2020/03/10.
+//  Copyright © 2020 Ye Joon Ko. All rights reserved.
+//
+
+#include <stdio.h>
+#include <string.h>
+
+
+int main() {
+    int num = 0;
+    int numArr[1000] ={0};
+    int temp = 0;
+    scanf("%d",&num);
+    
+    for(int i=0;i<num;i++){
+        scanf("%d",&numArr[i]);
+    }
+    
+    for(int i=0; i<num;i++){
+        for(int j=i;j<num;j++){
+            if(numArr[i]>numArr[j]){
+                temp=numArr[i];
+                numArr[i]=numArr[j];
+                numArr[j]=temp;
+            }
+        }
+    }
+    
+    for(int i = 0;i<num;i++){
+        printf("%d\n",numArr[i]);
+    }
+    return 0;
+}

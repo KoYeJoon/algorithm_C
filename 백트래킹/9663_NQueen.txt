@@ -1,0 +1,85 @@
+#include <stdio.h>
+
+int flag_a[16];
+int flag_b[256];
+int flag_c[256];
+int pos[16];
+int count = 0;
+int n=0;
+void set(int i)
+{
+    for(int j=0;j<n;j++){
+        if(!flag_a[j] && !flag_b[i+j] && !flag_c[i-j+(n-1)]){
+            pos[i]=j;
+            if(i==n-1){
+                count = count+1;
+            }
+            else{
+                flag_a[j] = flag_b[i+j] = flag_c[i-j+(n-1)]=1;
+                set(i+1);
+               flag_a[j] = flag_b[i+j] = flag_c[i-j+(n-1)]=0;
+            }
+        }
+    }
+}
+
+int main(void)
+{
+    scanf("%d",&n);
+    for(int i=0;i<n;i++){
+        flag_a[i] = 0;
+    }
+    for(int i=0;i<n;i++){
+        flag_b[i] = 0;
+    }
+    set(0);
+    
+    printf("%d",count);
+    return 0;
+}
+
+
+
+
+
+
+=========================================
+#include <stdio.h>
+#include <stdlib.h>
+int N, count;
+int chess[15];
+int promising(int line)
+{
+    for (int i = 0; i < line; i++)
+    {
+        if (chess[i] == chess[line] || abs(chess[line] - chess[i]) == line - i)
+            return 0;
+    }
+    return 1;
+}
+ 
+void nQueen(int line)
+{
+    if (line == N - 1)
+    {
+        count++;
+        return;
+    }
+    for (int i = 0; i < N; i++)
+    {
+        chess[line + 1] = i;
+        if (promising(line + 1))
+        {
+            nQueen(line + 1);
+        }
+    }
+}
+ 
+int main()
+{
+    scanf("%d", &N);
+    nQueen(-1);
+    printf("%d", count);
+}
+
+

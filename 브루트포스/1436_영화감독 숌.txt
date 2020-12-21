@@ -1,0 +1,60 @@
+//
+//  main.c
+//  prepareTest
+//
+//  Created by Ye Joon Ko on 2020/03/10.
+//  Copyright © 2020 Ye Joon Ko. All rights reserved.
+//
+
+#include <stdio.h>
+#include <string.h>
+
+
+int main() {
+    int n = 0;
+    scanf("%d", &n);
+    
+    int flag=1;
+    int result = 666;
+    int count = 0;
+    
+    int ttemp=0;
+    
+    while(flag ==1){
+        int temp = result;
+        while(temp!=0){
+            if(temp%10 != 6){
+                temp = temp/10;
+            }
+           else if(temp%10 ==6 ){
+                temp=temp/10;
+                ttemp = temp;
+                if(temp%10 ==6){
+                    temp=temp/10;
+                    ttemp=temp;
+                    if(temp%10 ==6){
+                        temp = temp/10;
+                        ttemp=temp;
+                        count++;
+                        break;
+                    }
+                }
+            }
+            
+           
+        }
+        
+        if(count==n){
+            flag=0;
+            break;
+        }
+        else{
+            result = result+1;
+            
+        }
+        
+    }
+    
+    printf("%d",result);
+    return 0;
+}

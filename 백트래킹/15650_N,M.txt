@@ -1,0 +1,66 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+
+int n,m;
+int arr[9];
+bool visited[9];
+
+void func(int cnt,int cur){
+    if(cnt==m){
+        for(int i=0;i<m;i++){
+            printf("%d ",arr[i]);
+        }
+        printf("\n");
+        return;
+    }
+    
+    
+    for(int i=cur;i<=n;i++){
+        if(!visited[i]){
+            visited[i] = true;
+            arr[cnt] = i;
+            func(cnt+1,i+1);
+            visited[i] = false;
+        }
+    }
+}
+
+int main(){
+ 
+    scanf("%d %d",&n, &m);
+    
+    func(0,1);
+    
+    return 0;
+}
+-
+===========================
+#include <stdio.h>
+
+int line[10] = { 0 };
+int visit[10] = { 0 };
+
+void DFS(int N, int M, int num,int cur){ // num은 현재의 깊이를 나타냄
+    if(num == M){ // 제한한 깊이까지 들어갔을 때 출력
+        for(int i = 0; i < M; i++){
+            printf("%d ", line[i]); // line[]에 축적한 값들을 하나씩 출력
+        }
+        puts("");
+    }
+    for(int i = cur; i <= N; i++){ // 현재의 깊이 에서 그 다음 애들로 파고 들어감
+        if(visit[i] < M && num != M &&visit[i]==0){ // 1에서 1, 2, 3, 4 확인
+            visit[i]++; // 1에서 1로 들어갔다
+            line[num] = i; // line에 숫자 넣어놓고
+            DFS(N, M, num + 1,i); // 다시 여기서 한번 더 깊이 들어감
+            visit[i]--; // 쭉쭉 다 들어가면 이제 마지막에서부터 visit를 초기화시킴
+        }
+    }
+}
+
+int main(){
+    int N, M;
+    scanf("%d %d", &N, &M); // M : 깊이
+    DFS(N, M, 0,1);
+    return 0;
+}

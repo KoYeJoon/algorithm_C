@@ -1,0 +1,203 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+
+// prices_len은 배열 prices의 길이입니다.
+int* solution(int prices[], size_t prices_len) {
+    // return 값은 malloc 등 동적 할당을 사용해주세요. 할당 길이는 상황에 맞게 변경해주세요.
+    int* answer = (int*)malloc(sizeof(int)*prices_len);
+    int count = 0;
+    for(int i=0;i<prices_len;i++){
+        count = 0;
+        for(int j=i+1;j<prices_len;j++){
+            if(prices[j]<prices[i]){
+                count++;
+                break;
+            }
+            if(prices[j]>=prices[i]){
+                count++;
+            }
+        }
+       answer[i]= count;
+    }
+    return answer;
+}
+
+
+
+=====================
+//
+//  main.c
+//  prepareTest
+//
+//  Created by Ye Joon Ko on 2020/03/10.
+//  Copyright © 2020 Ye Joon Ko. All rights reserved.
+//
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+
+// numbers_len은 배열 numbers의 길이입니다.
+char* solution(int numbers[], size_t numbers_len) {
+    // return 값은 malloc 등 동적 할당을 사용해주세요. 할당 길이는 상황에 맞게 변경해주세요.
+    int charNum = 0;
+    int count = 0;
+    int numbersTemp[100000] = {0,};
+    int numbercount[100000] = {0,};
+    int numbersCopy[100000] = {0,};
+    // count배열도 바꿔줬어야함.
+    
+    for(int i=0;i<numbers_len;i++){
+        numbersTemp[i] = numbers[i];
+    }
+    
+   
+      
+    for(int i=0;i<numbers_len;i++){
+        while(numbersTemp[i]>9){
+            numbercount[i]++;
+            count++;
+            numbersTemp[i] = numbersTemp[i]/10;
+        }
+        count++;
+    }
+    char* answer = (char*)malloc(sizeof(char)*count);
+    int temp = 0;
+    
+    for(int i=0;i<numbers_len;i++){
+        for(int j=i+1;j<numbers_len;j++){
+            if(numbersTemp[j]>numbersTemp[i]){
+                temp = numbersTemp[j];
+                numbersTemp[j] = numbersTemp[i];
+                numbersTemp[i] = temp;
+                
+                temp=numbers[i];
+                numbers[i] = numbers[j];
+                numbers[j] = temp;
+            }
+        }
+    }
+    
+    for(int i=0;i<numbers_len;i++){
+        for(int l = i+1;l<numbers_len;l++){
+            if(numbersTemp[i]==numbersTemp[l]){
+                for(int j = 1;j<6;j++){
+                    for(int k=0;k<numbers_len;k++){
+                        numbersCopy[k] = numbers[k];
+                    }
+                    
+                    if(numbersCopy[i]>10){
+                        while(numbersCopy[i]>=j*10){
+                            numbersCopy[i] = numbersCopy[i]/10;
+                        }
+                    }
+                    if(numbersCopy[l]>10){
+                        while(numbersCopy[l]>=j*10){
+                                    numbersCopy[l] = numbersCopy[l]/10;
+                                }
+                    }
+                   
+                    if((numbersCopy[i]%10)<(numbersCopy[l]%10)){
+                        temp = numbers[i];
+                        numbers[i] =numbers[l];
+                        numbers[l] = temp;
+                        break;
+                    }
+                    else if((numbersCopy[i]%10)<(numbersCopy[l]%10)){
+                        break;
+                    }
+                }
+            }
+        }
+            
+            
+        }
+    
+    
+    for(int i = 0;i<numbers_len;i++){
+        char*tempStr = malloc(sizeof(7));
+        sprintf(tempStr,"%d",numbers[i]);
+        for(int j = 0;j<=numbercount[i];j++){
+                answer[charNum] =tempStr[j];
+                charNum++;
+            }
+    }
+    
+    return answer;
+}
+int main() {
+    int arr[3] = {6,10,2};
+
+    int*lcd = solution(arr,3);
+    for(int i=0;i<7;i++){
+         printf("%d ",*(lcd+i));
+    }
+   
+    return 0;
+}
+
+===================================
+//
+//  main.c
+//  prepareTest
+//
+//  Created by Ye Joon Ko on 2020/03/10.
+//  Copyright © 2020 Ye Joon Ko. All rights reserved.
+//
+
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#include <string.h>
+
+// 파라미터로 주어지는 문자열은 const로 주어집니다. 변경하려면 문자열을 복사해서 사용하세요.
+// skill_trees_len은 배열 skill_trees의 길이입니다.
+int solution(const char* skill, const char* skill_trees[], size_t skill_trees_len) {
+    int answer = 0;
+    int skill_len = strlen(skill);
+    char c = {0};
+    char cTemp = {0};
+    int skillNum = 0;
+    for(int i=0;i<skill_trees_len;i++){
+        int skill_trees_arrlen = strlen(skill_trees[i]);
+        skillNum = 0;
+
+        int flag1 = 1;
+        for(int j=0;j<skill_trees_arrlen; j++){
+            c = *(skill+skillNum);
+            cTemp = skill_trees[i][j];
+            for(int k=skillNum+1;k<skill_len;k++){
+                char csTemp = {0};
+                csTemp = *(skill+k);
+                if(cTemp == csTemp){
+                    flag1=2;
+                    break;
+                }
+            }
+            
+            if(c==cTemp){
+                    skillNum++;
+            }
+            
+            
+            if(flag1 == 2){
+                break;
+            }
+        }
+        
+        if(flag1!=2){
+            answer++;
+        }
+    }
+    return answer;
+}
+
+int main() {
+    char*arr = "CBD";
+    char*skill_trees[4] = {"BACDE","CBADF","AECB","BDA"};
+
+    int num = solution(arr, skill_trees, 4);
+    printf("%d",num);
+    
+    return 0;
+}

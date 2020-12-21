@@ -1,0 +1,39 @@
+//
+//  main.c
+//  prepareTest
+//
+//  Created by Ye Joon Ko on 2020/03/10.
+//  Copyright © 2020 Ye Joon Ko. All rights reserved.
+//
+
+#include <stdio.h>
+#include <string.h>
+
+
+int main() {
+   
+    int n,temp;
+    int count[10001] = {0, };
+    
+    scanf("%d", &n);
+    
+    //1부터 10000까지 들어오므로 1부터 10000까지의 인덱스를 갖는 배열을 만들고
+    //들어온 값을 인덱스로 하는 요소의값을 ++해준다.
+    for(int i=0;i<n;i++){
+        scanf("%d",&temp);
+        count[temp]++;
+    }
+    
+    
+    //1부터 인덱스 값을 증가시키면서, 그 안에 요소값이 0 이 아닌 경우, 그 안에 들어있는
+    //요소 개수만큼 인덱스 값을 출력해준다.
+    //정렬계의 혁명인듯.
+    for(int i=1;i<10001;i++){
+        if(count[i] != 0){
+            for(int j=0;j<count[i];j++){
+                printf("%d\n",i);
+            }
+        }
+    }
+    return 0;
+}

@@ -1,0 +1,81 @@
+//c언어 백준 14888번
+
+#include <stdio.h>
+int N;
+int num[101];                //N개의 숫자를 저장할 변수
+int giho[4];                //+,-,*,/ 순서대로 연산자 갯수를 저장
+int INT_MIN = 987654321;    //최소값은 언제나 가장큰값보다 작아야
+int INT_MAX = -987654321;   //최대값은 언제나 가장 작은값보단 커야
+
+void sol(int plus, int minus, int mul, int div, int count, int result)
+{
+    if (count >= N)  //종료조건
+    {
+        if (result < INT_MIN)
+            INT_MIN = result;
+        if (result > INT_MAX)
+            INT_MAX = result;
+
+        return;
+    }
+
+
+    //plus
+    if (plus > 0)
+    {
+        int tmp_result = 0;
+        tmp_result = result + num[count];
+
+        sol(plus - 1, minus, mul, div, count + 1, tmp_result);
+    }
+
+    //minus
+    if (minus > 0)
+    {
+        int tmp_result = 0;
+        tmp_result = result - num[count];
+
+        sol(plus, minus - 1, mul, div, count + 1, tmp_result);
+
+    }
+
+    //mul
+    if (mul > 0)
+    {
+        int tmp_result = 0;
+        tmp_result = result * num[count];
+
+        sol(plus, minus, mul - 1, div, count + 1, tmp_result);
+    }
+
+    //div
+    if (div > 0)
+    {
+        int tmp_result = 0;
+        tmp_result = result / num[count];
+
+        sol(plus, minus, mul, div - 1, count + 1, tmp_result);
+    }
+
+
+}
+
+
+int main()
+{
+
+    scanf("%d", &N);
+    for (int i = 0; i < N; i++)
+        scanf("%d", &num[i]);
+
+    for (int i = 0; i < 4; i++)
+        scanf("%d", &giho[i]);
+
+    sol(giho[0], giho[1], giho[2], giho[3], 1, num[0]);
+
+    printf("%d\n", INT_MAX);
+    printf("%d\n", INT_MIN);
+
+    return 0;
+}
+-

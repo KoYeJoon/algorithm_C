@@ -1,0 +1,35 @@
+#include <stdio.h>
+struct Person{
+    int age;
+    char name[101];
+};
+struct Person person[100001];
+int main() {
+    int n=0;
+    int min_age = 201;
+    int max_age = 0;
+    
+    scanf("%d",&n);
+    
+    for(int i=0;i<n;i++){
+        scanf("%d %s", &person[i].age,person[i].name);
+        
+        if(min_age>person[i].age){
+            min_age=person[i].age;
+        }
+        
+        if(max_age<person[i].age){
+            max_age = person[i].age;
+        }
+    }
+    
+    for(int i=min_age;i<max_age+1;i++){
+        for(int j=0;j<n;j++){
+            if(i == person[j].age){
+                       printf("%d %s\n",person[j].age,person[j].name);
+                   }
+        }
+       
+    }
+    return 0;
+}
